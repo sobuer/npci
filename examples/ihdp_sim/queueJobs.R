@@ -22,7 +22,7 @@ if (!dir.exists("jobs")) dir.create("jobs")
 baseResultInterval <- matrix(c(1L, totalNumReps), 1L, 2L,
                              dimnames = list(NULL, c("start", "end")))
 
-source("results.R")
+source("examples/ihdp_sim/results.R")
 
 jobIter <- 1L
 

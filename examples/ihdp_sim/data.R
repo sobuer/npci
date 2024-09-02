@@ -6,12 +6,17 @@ loadDataInCurrentEnvironment <- function(covariates = "select", p.score = "none"
   callingEnv <- parent.frame(1L)
   
   if (is.character(covariates) && covariates != "full") {
-    dataFile <- file.path("data", "ihdp.RData")
+    dataFile <- file.path("examples/ihdp_sim/data", "ihdp.RData")
     if (!file.exists(dataFile)) stop("ihdp data file not found at path: ", dataFile)
 
     load(dataFile)
     
     ihdp <- subset(ihdp, treat != 1 | momwhite != 0)
+    
+    # 出生体重、頭囲、早産週数、出生順位、新生児健康、母年齢、
+    # 性別、双子か、婚姻状況、、、学歴、
+    # タバコ、初産、、薬、職歴、妊婦ケア、
+    # 、、、マイアミ、ペンシルベニア、テキサス、ワシントン
     
     covariateNames <- c("bw", "b.head", "preterm", "birth.o", "nnhealth", "momage",
                         "sex", "twin", "b.marr", "mom.lths", "mom.hs", "mom.scoll",
@@ -26,13 +31,13 @@ loadDataInCurrentEnvironment <- function(covariates = "select", p.score = "none"
     z <- ihdp$treat
     
     if (p.score != "none") {
-      propFile <- file.path("data", paste0("prop_", p.score, ".RData"))
+      propFile <- file.path("examples/ihdp_sim/data", paste0("prop_", p.score, ".RData"))
       if (!file.exists(propFile)) stop("propensity score file not found at path: ", propFile)
       
       load(propFile)
     }
   } else {
-    dataFile <- file.path("data", "ihdpFull.RData")
+    dataFile <- file.path("examples/ihdp_sim/data", "ihdpFull.RData")
     if (!file.exists(dataFile)) stop("ihdp full data file not found at path: ", dataFile)
     
     load(dataFile)
@@ -47,7 +52,7 @@ loadDataInCurrentEnvironment <- function(covariates = "select", p.score = "none"
     z <- ihdpFull$treat
     
     if (p.score != "none") {
-      propFile <- file.path("data", paste0("propFull_", p.score, ".RData"))
+      propFile <- file.path("examples/ihdp_sim/data", paste0("propFull_", p.score, ".RData"))
       if (!file.exists(propFile)) stop("full propensity score file not found at path: ", propFile)
       
       load(propFile)
@@ -268,7 +273,7 @@ generateDataForIterInCurrentEnvironment <- function(iter, x, z, w, overlap = TRU
   y.1 <- rnorm(n, mu.1, sigma.y)
   y <- ifelse(z == 1, y.1, y.0)
   
-  if (setting == "A") {
+  if (setting == "A") {         #Bじゃね？
     f.0 <- function(x) exp((x + w) %*% beta)
     f.1 <- function(x) x %*% beta - omega
     environment(f.0) <- npci:::args2env(baseenv(), w = c(0, w), beta, omega)
@@ -277,7 +282,7 @@ generateDataForIterInCurrentEnvironment <- function(iter, x, z, w, overlap = TRU
     callingEnv$f.0  <- f.0
     callingEnv$f.1  <- f.1
   }
-   
+
   callingEnv$mu.0 <- mu.0
   callingEnv$mu.1 <- mu.1
   callingEnv$y.0  <- y.0

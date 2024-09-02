@@ -4,20 +4,20 @@ require(npci)
 
 testIter <- 166L
 
-source("results.R")
+source("examples/ihdp_sim/results.R")
 
 results.n1 <- (function() { res <- collateResults("naive1"); res$results[testIter,] })()
 results.n2 <- (function() { res <- collateResults("naive2"); res$results[testIter,] })()
 results.bt <- (function() { res <- collateResults("bart"); res$results[testIter,] })()
 
-source("data.R")
+source("examples/ihdp_sim/data.R")
 
 x <- as.matrix(x)
 w <- rep(0.5, ncol(x))
 
 generateDataForIterInCurrentEnvironment(166L, x, z, w, overlap = FALSE)
 
-fitsFile <- file.path("data", "compFits.RData")
+fitsFile <- file.path("examples/ihdp_sim/data", "compFits.RData")
 if (file.exists(fitsFile)) {
   load(fitsFile)
 } else {

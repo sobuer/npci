@@ -9,12 +9,12 @@ verbose    <- if ((verbose <- Sys.getenv("VERBOSE")) == "") TRUE else as.logical
 
 require(npci)
 if (p.score == "bayesglm") require(arm)
-source("results.R")
+source("examples/ihdp_sim/results.R")
 
 prefix <- getPrefix(method, overlap, covariates, setting, p.score)
 
 resultsFileName <- paste0(prefix, "_", start, "_", end, ".RData")
-resultsFile <- file.path("data", resultsFileName)
+resultsFile <- file.path("examples/ihdp_sim/data", resultsFileName)
 
 if (file.exists(resultsFileName)) q("no")
 
@@ -34,7 +34,7 @@ opt.1 <- list()
 L.1 <- list()
 x.0.1 <- list()
 
-source("data.R")
+source("examples/ihdp_sim/data.R")
 loadDataInCurrentEnvironment(covariates, p.score)
 
 w <- 0.5

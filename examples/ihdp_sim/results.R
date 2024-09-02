@@ -25,13 +25,13 @@ collateResults <- function(method, overlap = TRUE, covariates = "select", settin
   colnames(results.t) <- c("bias", "cov", "cil", "wrong", "tau.est", "precision")
   
   for (i in seq_along(files)) {
-    load(file.path(dir, "data", files[i]))
+    load(file.path(dir, "examples/ihdp_sim/data", files[i]))
     resultsRange <- seq.int(start[i], end[i])
     results.t[resultsRange,] <- results
   }
   
   if (consolidate == TRUE) {
-    unlink(file.path(dir, "data", files))
+    unlink(file.path(dir, "examples/ihdp_sim/data", files))
     
     numResults <- nrow(results.t)
     

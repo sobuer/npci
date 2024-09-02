@@ -1,4 +1,4 @@
-numReps <- 250L
+numReps <- 2L#250L
 
 methods <- "grouped"
 #methods <- "bart"
@@ -16,7 +16,7 @@ verbose <- TRUE
 baseResultInterval <- matrix(c(1L, numReps), 1L, 2L,
                              dimnames = list(NULL, c("start", "end")))
 
-source("results.R")
+source("examples/ihdp_sim/results.R")
 
 for (i in seq_along(methods)) {
   for (j in seq_along(overlap)) {
@@ -44,7 +44,7 @@ for (i in seq_along(methods)) {
             cat("running method '", methods[i], "' with overlap = ", overlap[j], ", covariates = '", covariates[k],
                 "', setting = ", settings[l], ", prop = ", p.score[m], " from ", interval[,"start"], " to ", interval[,"end"], "\n", sep = "")
             
-            source("runJob.R", local = new.env(parent = .GlobalEnv), keep.source = FALSE)
+            source("examples/ihdp_sim/runJob.R", local = new.env(parent = .GlobalEnv), keep.source = FALSE)
           }
         }
       }
